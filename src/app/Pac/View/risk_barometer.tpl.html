@@ -1,0 +1,22 @@
+<div>
+    <h4 class="text-center">Portfolio Risks</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th ng-repeat="(key, value) in portfolioRisksLabel">{{key}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="portfolioRisk in portfolioRisks">
+                        <td ng-repeat="(key, val) in portfolioRisk">
+                            {{val}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

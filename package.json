@@ -1,0 +1,29 @@
+{
+  "author": "Kovarthanan",
+  "name": "PAC-Report",
+  "version": "0.0.1",
+  "homepage": "https://github.com/kovarthanan3222/PAC-Report-Boiler-setup.git",
+  "bugs": "https://github.com/kovarthanan3222/PAC-Report-Boiler-setup.git",
+  "repository": {
+    "type": "git",
+    "url": "github.com/kovarthanan3222/PAC-Report-Boiler-setup"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~1.0.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-less": "~1.3.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-html2js": "^0.3.6",
+    "grunt-karma": "^2.0.0",
+    "grunt-ng-annotate": "^2.0.2",
+    "karma": "^0.13.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^0.1.0"
+  }
+}

@@ -1,0 +1,587 @@
+<div class="overlay_popup"></div>
+<div class="masterheader">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="assets/images/header-logo.png" class="logo-header" alt="header-logo">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wrapper">
+    <input type="hidden" name="advisor_id" value="1" id="current_advisor"/>
+    <div class="sidebar-collapse"><span ng-click="collapseme=!expandme" ng-show="collapseme"> < </span></div>
+    <div class="side-panel sidebar" ng-hide="collapseme" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <div class="header">Portfolio Analytics Center<span ng-click="expandme=!collapseme" class="sidebar-collapse"> < </span></div>
+            <div class="slim-scroll-wrapper">
+            <ul class="nav" id="side-menu">
+                <li class="first-level-menus active">
+                    <a href="javascript:void(0)" class="pull-left action-btns" ng-click="showActionButtons('scenario')"><span class="glyphicon arrow"></span> Scenario Inputs </a>
+                    <span class="pull-right btn-actions" style="padding: 10px 15px;" ng-show="scenarioAction==true">
+                        <span class="btn-controls-wrapper">
+                            <button class="btn btn-controls btn-refresh" ng-click="initializeFormData();">
+                                <i class="ic icon-refresh ic-lg" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                        <span class="btn-controls-wrapper">
+                            <button class="btn btn-controls btn-save" data-toggle="customcollapse" data-target="#save">
+                                <i class="ic icon-save-all ic-lg" aria-hidden="true"></i>
+                            </button>
+                            <div id="save" class="collapse popup-dialog">
+                                <div class="popup-body">
+                                    <div class="form-group">
+                                        <label for="">Save Scenario</label>
+                                        <input type="text" class="form-control" id="save-scenario-name" placeholder="Scenario Name">
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary-blue btn-outline close-overlay" data-dismiss="cancel-popup">Cancel</button>
+                                        <button class="btn btn-primary-blue" ng-click="saveScenario('')">Save</button>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </span>
+                        <span class="btn-controls-wrapper">
+                            <button class="btn btn-controls btn-save-edit" data-toggle="customcollapse" data-target="#save-edit">
+                                <i class="ic icon-save-edit ic-lg" aria-hidden="true"></i>
+                            </button>
+                            <div id="save-edit" class="collapse popup-dialog">
+                                <div class="popup-body">
+                                    <div class="form-group">
+                                        <label for="">Save Scenario as</label>
+                                        <input type="text" class="form-control" id="saveas-scenario-name" placeholder="Scenario Name">
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary-blue btn-outline close-overlay" data-dismiss="cancel-popup">Cancel</button>
+                                        <button class="btn btn-primary-blue" ng-click="saveAsScenario()">Save</button>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </span>
+                    </span>
+                    <span class="clearfix"></span> 
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <div class="cmn-panel bg-transparent">
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="scenario-auto-complete"
+                                        		md-no-cache=true
+                                            md-selected-item-change="selectScenario(item)"
+                                            md-selected-item="savedScenario"
+                                            md-search-text="inputData.searchText"
+                                            md-items="item in scenarioSearch(inputData.searchText)"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Default Scenario"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                    <span ng-click="deletePortFolio(item.id);"><span class=
+                                                                                                     "pull-right"><i class="ic icon-delete-button ic-valign fa-fw trash-bg" aria-hidden="true" data-toggle="customcollapse" ng-click="$event.stopPropagation();test();" data-target="#delete{{item.id}}"></i></span></span>
+                                                    <div id="delete{{item.id}}" class="collapse popup-dialog">
+                                                        <div class="popup-body">
+                                                            <div class="form-group">
+                                                                <label for="">Save Scenario</label>
+                                                                <input type="text" class="form-control" id="save-scenario-name" placeholder="Scenario Name">
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button class="btn btn-primary-blue btn-outline close-overlay" data-dismiss="cancel-popup">Cancel</button>
+                                                                <button class="btn btn-primary-blue" ng-click="saveScenario('')">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#scenario-auto-complete')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>                           
+                            </div>                        
+                        </li>
+                        <li>
+                            <div class="cmn-panel">
+                                <div class="form-horizontal">
+                                    <div class="form-group mb0">
+                                        <label class="col-xs-3 control-label">Date</label>
+                                        <div class="col-md-offset-0 col-xs-7">
+                                            <div class="input-group dateCustomize">
+                                                <md-datepicker ng-model="inputData.portfolio_date" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cmn-panel">
+                                <span class="slider-header">Investment Amount ($)</span>
+                                <span class="pull-right slider-label">{{(inputData.investment_amount.value)|number:0}}</span>
+                                <div class="invest-amount">
+                                    <rzslider rz-slider-model="inputData.investment_amount.value"
+                                              rz-slider-options="inputData.investment_amount.options">
+                                    </rzslider>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cmn-panel">
+                                <span class="slider-header">Annual Distribution</span><br>
+                                <span class="slider-sub-header">(% of Initial Investment)</span>
+                                <span class="pull-right slider-label"><span>{{inputData.annual_distribution.value}}%</span><i>&nbsp;|&nbsp;</i><span>{{(inputData.investment_amount.value * (inputData.annual_distribution.value / 100)) | number:0}}$</span></span>
+                                <div class="annual-distribution">
+                                    <rzslider rz-slider-model="inputData.annual_distribution.value"
+                                              rz-slider-options="inputData.annual_distribution.options">
+                                    </rzslider>                               
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cmn-panel">
+                                <span class="slider-header">Fee Adjustment (%)</span>
+                                <span class="pull-right slider-label">{{inputData.fee_adjustment.value}}</span>
+                                <div class="free-adjustment">
+                                    <rzslider rz-slider-model="inputData.fee_adjustment.value"
+                                              rz-slider-options="inputData.fee_adjustment.options">
+                                    </rzslider>                               
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cmn-panel">
+                                <span class="slider-header">Custom period</span>
+                                <span class="pull-right slider-label">{{inputData.custom_period.minValue}}-{{inputData.custom_period.maxValue}}</span>
+                                <div class="custom-period">
+                                    <rzslider rz-slider-model="inputData.custom_period.minValue"
+                                              rz-slider-high="inputData.custom_period.maxValue"
+                                              rz-slider-options="inputData.custom_period.options"></rzslider>                               
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cmn-panel">
+                                <span class="slider-header">Asset Class Mix (%)</span>
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="scenario-assetclass-mix"
+                                        		md-no-cache=true
+                                            md-selected-item-change="selectAssetClassMix(item, item.type, 'scenario')"
+                                            md-search-text="inputData.scenarioAssetMixText"
+                                            md-items="item in assetClassMixSearch(inputData.scenarioAssetMixText, 'scenario')"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Equity 65% / Fixed Income 35%"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#scenario-assetclass-mix')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>
+                                <div class="save-asset" ng-show = "saveScenarioAssetClass == true">
+                                    <span data-toggle="customcollapse" data-target="#scenario-portfolio-save"><a href="javascript:void(0)">Click here to save asset class mix</a></span>
+                                    <span>
+                                        <button class="btn btn-controls btn-sm-primary-orange btn-sm" ng-click="changeDefaultAsset('scenario');"><i class="ic icon-cancel-form ic-2x" aria-hidden="true"></i></button>
+                                        <div id="scenario-portfolio-save" class="collapse popup-dialog">
+                                            <div class="popup-body">
+                                                <div class="form-group">
+                                                    <label for="">Save Portfolio</label>
+                                                    <input type="text" class="form-control" id="save-scenario-portfolio-name" placeholder="Portfolio Name">
+                                                </div>
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary-blue btn-outline close-overlay" data-dismiss="cancel-popup">Cancel</button>
+                                                    <button class="btn btn-primary-blue" ng-click="scenarioPortfolioSave()">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>                            
+
+                                    </span>
+                                </div>
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-sm" ng-repeat="(custom_allocation, allocation) in inputData.scenarioAllocations">
+                                        <label class="col-xs-8 control-label">{{custom_allocation}}</label>
+                                        <div class="col-xs-2 padding0">
+                                            <input type="text" class="form-control" ng-if="custom_allocation != defaultAllocation" ng-change="processAllocation(custom_allocation, 'scenario', false)" ng-model="inputData.scenarioAllocations[custom_allocation]"/>
+                                            <label class="asset-label" ng-if="custom_allocation == defaultAllocation" ng-bind="inputData.scenarioAllocations[custom_allocation]"/>
+                                        </div>
+                                        <div class="col-xs-1 padding0" ng-if="custom_allocation != defaultAllocation" ng-click="processAllocation(custom_allocation, 'scenario', true);">
+                                            <i class="ic icon-delete-button ic-valign fa-fw trash-bg" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="scenario-asset-class"
+                                        		md-no-cache=true
+                                            md-selected-item-change="selectAssetClass(item, 'scenario')"
+                                            md-search-text="inputData.scenarioAssetText"
+                                            md-items="item in assetClassSearch(inputData.scenarioAssetText, 'scenario')"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Search and add asset classes"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#scenario-asset-class')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>                                         
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li class="first-level-menus">
+                    <a href="javascript:void(0)" class="pull-left" ng-click="showActionButtons('portfolio')"><span class="glyphicon arrow"></span>  Manage Portfolio </a>
+                    <span class="pull-right btn-actions" style="padding: 10px 11px;" ng-show="portfolioAction==true">
+                        <span class="btn-controls-wrapper">
+                            <button class="btn btn-controls btn-refresh" ng-click="initializeFormData();">
+                                <i class="ic icon-refresh ic-lg" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                        <span class="btn-controls-wrapper">
+                            <button class="btn btn-controls btn-save" data-toggle="customcollapse" data-target="#portfolio-save">
+                                <i class="ic icon-save-all ic-lg" aria-hidden="true"></i>
+                            </button>
+                            <div id="portfolio-save" class="collapse popup-dialog">
+                                <div class="popup-body">
+                                    <div class="form-group">
+                                        <label for="">Save Portfolio</label>
+                                        <input type="text" class="form-control" id="save-portfolio-name" placeholder="Portfolio Name">
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary-blue btn-outline close-overlay" data-dismiss="cancel-popup">Cancel</button>
+                                        <button class="btn btn-primary-blue" ng-click="portfolioSave('')">Save</button>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </span>
+                        <span class="btn-controls-wrapper">
+                            <button class="btn btn-controls btn-save-edit" data-toggle="customcollapse" data-target="#portfolio-save-edit">
+                                <i class="ic icon-save-edit ic-lg" aria-hidden="true"></i>
+                            </button>
+                            <div id="portfolio-save-edit" class="collapse popup-dialog">
+                                <div class="popup-body">
+                                    <div class="form-group">
+                                        <label for="">Save Portfolio as</label>
+                                        <input type="text" class="form-control" id="saveas-portfolio-name" placeholder="Portfolio Name">
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary-blue btn-outline close-overlay" data-dismiss="cancel-popup">Cancel</button>
+                                        <button class="btn btn-primary-blue" ng-click="savePortfolioAs()">Save</button>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </span>
+                    </span> 
+                    <span class="clearfix"></span>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <div class="cmn-panel">
+                                <span class="slider-header">Asset Class Mix (%)</span>
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="portfolio-assetclass-mix"
+                                        		md-no-cache=true
+                                            md-selected-item-change="selectAssetClassMix(item, item.type, 'portfolio')"
+                                            md-selected-item="savedPortfolio"
+                                            md-search-text="inputData.portfolioAssetMixText"
+                                            md-items="item in assetClassMixSearch(inputData.portfolioAssetMixText, 'portfolio')"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Equity 65% / Fixed Income 35%"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#portfolio-assetclass-mix')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>
+                                
+                                <ul class="list-inline">
+                                    <li><button class="btn btn-sm-primary-orange btn-sm" ng-click="changeDefaultAsset('portfolio')"><i aria-hidden="true" class="ic icon-cancel-form ic-2x"></i></button></li>
+                                </ul>
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-sm" ng-repeat="(custom_allocation, allocation) in inputData.portfolioAllocations">
+                                        <label class="col-xs-8 control-label">{{custom_allocation}}</label>
+                                        <div class="col-xs-2 padding0">
+                                            <input type="text" class="form-control" ng-if="custom_allocation != defaultAllocation" ng-change="processAllocation(custom_allocation, 'portfolio', false)" ng-model="inputData.portfolioAllocations[custom_allocation]"/>
+                                            <label class="asset-label" ng-if="custom_allocation == defaultAllocation" ng-bind="inputData.portfolioAllocations[custom_allocation]"/>
+                                        </div>
+                                        <div class="col-xs-1 padding0" ng-if="custom_allocation != defaultAllocation" ng-click="processAllocation(custom_allocation, 'portfolio', true);">
+                                            <i class="ic icon-delete-button ic-valign fa-fw trash-bg" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="portfolio-assetclass"
+                                        		md-no-cache=true
+                                            md-selected-item-change="selectAssetClass(item, 'portfolio')"
+                                            md-search-text="inputData.portfolioAssetText"
+                                            md-items="item in assetClassSearch(inputData.portfolioAssetText, 'portfolio')"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Search and add asset classes"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#portfolio-assetclass')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
+                <li class="first-level-menus">
+                    <a href="#" ng-click="showActionButtons('compare')"><span class="glyphicon arrow"></span>  Compare Reports with Benchmark</a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <div class="cmn-panel cmp-switch">
+                            	<div class="compare-input">
+                            		<span class="compare-yes"><b>No</b></span>
+                                <md-switch ng-model="inputData.compare" aria-label="Compare" ng-true-value="'Yes'" ng-false-value="'No'" class="Compare"  ng-change="switchCompare()"></md-switch>
+                            		<span class="compare-no"><b>Yes</b></span>
+                            	</div>
+                            </div>
+                        </li>
+                        <li ng-if = "inputData.compare == 'Yes'">
+                            <div class="cmn-panel">
+                                <span class="slider-header">Asset Class Mix (%)</span>
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="compare-assetclass-mix"
+                                        		md-no-cache=true
+                                            md-selected-item-change="compareAssetClass(item)"
+                                            md-search-text="inputData.compareAssetMixText"
+                                            md-items="item in assetClassMixSearch(inputData.compareAssetMixText, 'compare')"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Compare With"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#compare-assetclass-mix')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>
+                                <ul class="list-inline">
+                                    <li><button class="btn btn-sm-primary-orange btn-sm" ng-click="changeDefaultAsset('compare');"><i class="ic icon-cancel-form ic-2x" aria-hidden="true"></i></button></li>
+                                </ul>
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-sm" ng-repeat="(custom_allocation, allocation) in inputData.compareAllocations">
+                                        <label class="col-xs-8 control-label">{{custom_allocation}}</label>
+                                        <div class="col-xs-2 padding0">
+                                            <input type="text" class="form-control" ng-if="custom_allocation != defaultAllocation" ng-change="processAllocation(custom_allocation, 'compare', false)" ng-model="inputData.compareAllocations[custom_allocation]"/>
+                                            <label class="asset-label" ng-if="custom_allocation == defaultAllocation" ng-bind="inputData.compareAllocations[custom_allocation]"/>
+                                        </div>
+                                        <div class="col-xs-1 padding0" ng-if="custom_allocation != defaultAllocation" ng-click="processAllocation(custom_allocation, 'compare', true);">
+                                            <i class="ic icon-delete-button ic-valign fa-fw trash-bg" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="">Default Scenario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                                        <md-autocomplete
+                                        		id="compare-assetclass"
+                                        		md-no-cache=true
+                                            md-selected-item-change="selectAssetClass(item, 'compare')"
+                                            md-search-text="inputData.compareAssetText"
+                                            md-items="item in assetClassSearch(inputData.compareAssetText, 'compare')"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="Search and add asset classes"
+                                            md-menu-class="autocomplete-custom-template">
+                                            <md-item-template>
+                                                <span class="item-title scenarios">
+                                                    <span>{{item.name}}</span>
+                                                </span>
+                                            </md-item-template>
+                                        </md-autocomplete>
+                                        <div class="input-group-addon" ng-click="openAutocomplete('#compare-assetclass')"><i class="glyphicon glyphicon-menu-down"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
+
+            </ul>
+            </div>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default scenario-header">
+                        <div class="panel-heading"><h4>{{scenarioName}}</h4></div>
+                        <div class="panel-body">
+                            <div id="outputContiner">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id = "composition"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id = "equityVsFixed"></div>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-md-6">
+                                        <div id = "CompEquityVsFixed" style="height:200px;"></div>                                
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id = "domVsIntr" style="height:200px;"></div>                                
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id = "compositionCompare"></div>
+                                    </div>                         
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div id = "equityVsFixedCompare"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id = "domVsIntrCompare"></div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /.col-lg-12 -->
+                </div>
+                <div class="col-md-12">
+                    <!-- Slider Begins Here -->
+                    <div class="slider-wrapper">
+                        <div class="report-status">Report <span>{{report.value}}</span> of <span>11</span></div>
+                        <div class="owl-carousel">
+                            <a href="javascript:void(0)" ng-click="createCompositionChart();"><div class="item">
+                                    <img src="assets/images/slider/composition.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Composition
+                                    </div>
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createGrowthOfPortfolio();" ><div class="item">
+                                    <img src="assets/images/slider/perfomancehistory.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Growth Of Portfolio
+                                    </div>
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createDowntownAndRecoveries();" ><div class="item">
+                                    <img src="assets/images/slider/perfomancehistory.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Downtown and Recoveries
+                                    </div>
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createBestAndWorstCaseChart();" ><div class="item">
+                                    <img src="assets/images/slider/graphsii.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Best and Worst Case Returns
+                                    </div>                                 
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createRisksBarometerReport();" ><div class="item">
+                                    <img src="assets/images/slider/returngraphs.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Risk Barometer
+                                    </div>                                 
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createPortfolioPerformenceHistory();" ><div class="item">
+                                    <img src="assets/images/slider/graphsii.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Performance History
+                                    </div>                                 
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createNormalDistribution();" ><div class="item">
+                                    <img src="assets/images/slider/composition.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Normal Distribution
+                                    </div>                                 
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createDataDisclosure();" ><div class="item">
+                                    <img src="assets/images/slider/composition.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Data Disclosure
+                                    </div>                                 
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createHistoricalAssetPortfolioReturns();"  ><div class="item">
+                                    <img src="assets/images/slider/composition.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Historical Asset Class Returns
+                                    </div>                                 
+                                </div></a>
+                            <a href="javascript:void(0)" ng-click="createStressTest();" ><div class="item">
+                                    <img src="assets/images/slider/composition.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Stress Test
+                                    </div>                                 
+                                </div></a>
+
+                            <a href="javascript:void(0)" ng-click="createSkittleChart();" ><div class="item">
+                                    <img src="assets/images/slider/composition.png" alt="thumbnail">
+                                    <div class="owlc-caption">
+                                        Skittle Chart
+                                    </div>                                 
+                                </div></a>
+                        </div>                           
+                    </div>
+                    
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+    </div>
+</div>
+

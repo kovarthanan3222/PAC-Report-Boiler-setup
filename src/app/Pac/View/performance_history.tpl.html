@@ -1,0 +1,61 @@
+<div>
+    <h4 class="text-center">Performance History</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped table-scroll">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Asset Class Portfolio</th>
+                        <th>Amount</th>
+                        <th ng-show="performanceHistoryCompare">Compare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in historyData.portfolio.year">
+                        <td>{{key}}</td>
+                        <td>{{historyData.portfolio.year[key].portfolio}}</td>
+                        <td>{{historyData.portfolio.year[key].amount | currency}}</td>
+                        <td ng-show="performanceHistoryCompare">{{performanceHistoryCompare.year[key].amount | currency}}</td>
+                    </tr>
+                    <tr>
+                        <td>Annualized Return</td>
+                        <td>{{historyData.portfolio["Annualized Return"]}}%</td>
+                        <td ng-show="performanceHistoryCompare">{{performanceHistoryCompare["Annualized Return"]}}%</td>
+                    </tr>
+                    <tr>
+                        <td>Standard Deviation</td>
+                        <td>{{historyData.portfolio["Standard Deviation"]}}%</td>
+                        <td ng-show="performanceHistoryCompare">{{performanceHistoryCompare["Standard Deviation"]}}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4 class="text-center">Performance History Statistics</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Asset Class Portfolio Statistics</th>
+                        <th>Amount</th>
+                        <th ng-show="performanceHistoryCompare">Compare</th>
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in historyData.portfolio.annual">
+                        <td>{{key}}</td>
+                        <td>{{value |currency}}</td>
+                        <td ng-show="performanceHistoryCompare">{{performanceHistoryCompare.annual[key] |currency}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

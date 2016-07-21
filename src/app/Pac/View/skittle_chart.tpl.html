@@ -1,0 +1,17 @@
+<div id="skittle-chart" class="skittle-chart">
+    <h4 class="text-center">Skittle Chart</h4>
+    <ul ng-repeat="(pKey, portfolioAssetClass) in portfolioAssetClasses">
+        <li><span>{{pKey}}</span></li>
+        <li ng-repeat="(key, val) in portfolioAssetClass">
+            <span style="padding: 2px 6px;">{{key}}</span><span style="padding: 2px 6px;">{{val}}</span>
+        </li>
+    </ul>
+</div>
+<div id="skittle-chart-annual" class="skittle-chart">
+    <ul ng-repeat="(aKey, annual) in annualRecords">
+        <li>{{aKey}}</li>
+        <li ng-repeat="(key, val) in annual">
+            <span>{{key}}<br>{{val}}</span>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,51 @@
+<div>
+    <h4 class="text-center">Historical Asset Class Portfolio Returns</h4>
+
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped table-scroll">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Asset Class Portfolio</th>
+                        <th ng-show="hisAstClsDataCompare">Compare</th>
+                        <th ng-show="hisAstClsDataCompare">+/-Index</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tbldata in hisAstClsData.portfolio.yearreport">
+                        <td>{{tbldata.year}}</td>
+                        <td>{{tbldata.portfolio}}%</td>
+                        <td ng-show="hisAstClsDataCompare">{{hisAstClsDataCompare.yearreport[tbldata.year].portfolio}}%</td>
+                        <td ng-show="hisAstClsDataCompare">{{tbldata.portfolio - hisAstClsDataCompare.yearreport[tbldata.year].portfolio |number:2}}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4 class="text-center">Asset Class Portfolio Statistics</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped table-scroll">
+                <thead>
+                    <tr>
+                        <th>Asset Class Portfolio Statistics</th>
+                        <th>Asset Class Portfolio</th>
+                        <th ng-show="hisAstClsDataCompare">Compare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in hisAstClsData.portfolio.totalreport">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                        <td ng-show="hisAstClsDataCompare">{{hisAstClsDataCompare.totalreport[key]}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

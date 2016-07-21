@@ -1,0 +1,47 @@
+<div>
+    <h4 class="text-center">Assert Class Portfolio Stress test</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Assert Classes</th>
+                        <th>% Allocation</th>
+                        <th ng-repeat="tbldata in getStressTestdata.portfolio.years">
+                            {{tbldata}}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in postData.allocation">
+                        <td>{{key}}</td>
+                        <td>{{value}}%</td>
+                        <td ng-repeat="(yearKey, allocationValue) in getStressTestdata.portfolio.data.performance[key]">{{allocationValue}}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div>
+    <h4 class="text-center">Asset Class Portfolio Stress Test with Distribution</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Portfolio Valuations</th>
+                        <th ng-repeat="tbldata in getStressTestdata.portfolio.years">
+                            {{tbldata}}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="stresTest in stresTestWithDist">
+                        <td ng-repeat="value in stresTest">{{value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

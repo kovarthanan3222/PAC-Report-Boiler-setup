@@ -1,0 +1,41 @@
+<div>
+    <h4 class="text-center">Distribution</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th ng-repeat="(key, value) in distributionLabel">{{key}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="distribution in distributions">
+                        <td ng-repeat="(key, val) in distribution">
+                            {{val}}%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th ng-repeat="value in distributionKeys">{{value}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rangeDistribution in rangeDistributions">
+                        <td ng-repeat="val in rangeDistribution">
+                            {{val}}%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

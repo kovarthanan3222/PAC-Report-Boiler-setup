@@ -1,0 +1,22 @@
+<div>
+    <h4 class="text-center">Asset Class Portfolio Statistics</h4>
+    <div class="asset-portfolio">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Asset Class Portfolio Statistics</th>
+                        <th>Asset Class Portfolio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in hisAstClsData.portfolio.totalreport">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
